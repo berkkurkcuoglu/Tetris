@@ -10,6 +10,12 @@
 
 @interface ViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIButton *upButton;
+@property (strong, nonatomic) IBOutlet UIButton *rightButton;
+@property (strong, nonatomic) IBOutlet UIButton *leftButton;
+@property (strong, nonatomic) IBOutlet UIButton *downButton;
+@property (strong, nonatomic) IBOutlet UIButton *goLeftButton;
+@property (strong, nonatomic) IBOutlet UIButton *goRightButton;
 
 @end
 

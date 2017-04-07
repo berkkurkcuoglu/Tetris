@@ -25,5 +25,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)upwards:(id)sender {
+}
+- (IBAction)rightwards:(id)sender {
+}
+- (IBAction)leftwards:(id)sender {
+}
+- (IBAction)downwards:(id)sender {
+}
+- (IBAction)goLeft:(id)sender {
+}
+- (IBAction)goRight:(id)sender {
+}
 
 @end

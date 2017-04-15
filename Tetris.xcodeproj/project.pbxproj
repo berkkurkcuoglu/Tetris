@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C08ECFD41EA2C74A0094E7CE /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = C08ECFD31EA2C74A0094E7CE /* Cell.m */; };
 		C09348121E97347000D29F0A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C09348111E97347000D29F0A /* main.m */; };
 		C09348151E97347000D29F0A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C09348141E97347000D29F0A /* AppDelegate.m */; };
 		C09348181E97347000D29F0A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C09348171E97347000D29F0A /* ViewController.m */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C08ECFD21EA2C74A0094E7CE /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
+		C08ECFD31EA2C74A0094E7CE /* Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell.m; sourceTree = "<group>"; };
 		C093480D1E97347000D29F0A /* Tetris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tetris.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C09348111E97347000D29F0A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C09348131E97347000D29F0A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -105,6 +108,8 @@
 				C09348141E97347000D29F0A /* AppDelegate.m */,
 				C09348161E97347000D29F0A /* ViewController.h */,
 				C09348171E97347000D29F0A /* ViewController.m */,
+				C08ECFD21EA2C74A0094E7CE /* Cell.h */,
+				C08ECFD31EA2C74A0094E7CE /* Cell.m */,
 				C09348191E97347000D29F0A /* Main.storyboard */,
 				C093481C1E97347000D29F0A /* Assets.xcassets */,
 				C093481E1E97347000D29F0A /* LaunchScreen.storyboard */,
@@ -277,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C09348181E97347000D29F0A /* ViewController.m in Sources */,
+				C08ECFD41EA2C74A0094E7CE /* Cell.m in Sources */,
 				C09348151E97347000D29F0A /* AppDelegate.m in Sources */,
 				C09348121E97347000D29F0A /* main.m in Sources */,
 			);
@@ -516,6 +522,7 @@
 				C093483C1E97347000D29F0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C093483D1E97347000D29F0A /* Build configuration list for PBXNativeTarget "TetrisTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +531,7 @@
 				C093483F1E97347000D29F0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C09348401E97347000D29F0A /* Build configuration list for PBXNativeTarget "TetrisUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +540,7 @@
 				C09348421E97347000D29F0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

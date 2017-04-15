@@ -66,7 +66,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgc-yx-De1">
                                 <rect key="frame" x="279" y="582" width="56" height="30"/>
-                                <state key="normal" title="GoRIght"/>
+                                <state key="normal" title="GoRight"/>
                                 <connections>
                                     <action selector="goRight:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6A1-eX-aIl"/>
                                 </connections>
@@ -106,6 +106,7 @@
                     </view>
                     <connections>
                         <outlet property="downButton" destination="fAg-cr-FQZ" id="6de-pC-n65"/>
+                        <outlet property="gameView" destination="YPW-oJ-7Jv" id="QRW-JJ-1nY"/>
                         <outlet property="goLeftButton" destination="DNE-4m-ujJ" id="clj-LR-tcU"/>
                         <outlet property="goRightButton" destination="dgc-yx-De1" id="qJz-gT-EwC"/>
                         <outlet property="leftButton" destination="QVQ-sK-Rb3" id="1Gk-6j-mMt"/>

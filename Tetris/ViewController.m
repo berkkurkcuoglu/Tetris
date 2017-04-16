@@ -56,6 +56,10 @@
 
 -(void)simulate:(CADisplayLink *)sender{
     //[self createTetromino];
+    if([self movePossible])
+        [self moveTetromino];
+    else
+        [self createTetromino];
 }
 
 -(void) createTetromino{
@@ -138,6 +142,30 @@
 
             break;
     }
+}
+-(BOOL) movePossible{
+    BOOL result = true;
+    for(Cell* cell in _tetromino){
+        if(cell.yIndex >= 31)
+            result = false;
+    }
+    return result;
+}
+
+-(void) moveTetromino{
+    for(Cell *cell in _tetromino){
+        [cell setBackgroundColor:[UIColor blueColor]];
+    }
+    for(int i = 0; i < [_tetromino count];i++){
+        [_tetromino replaceObjectAtIndex:i withObject:[self getNextCell:[_tetromino objectAtIndex:i]]];
+    }
+    for(Cell *cell in _tetromino){
+        [cell setBackgroundColor:[UIColor redColor]];
+    }
+}
+
+-(Cell*) getNextCell:(Cell*) currentCell{
+    return [self getCell:currentCell.xIndex :currentCell.yIndex+1];
 }
 
 -(Cell*) getCell:(int)x :(int)y{

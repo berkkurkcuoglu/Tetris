@@ -12,6 +12,6 @@
 
 @property (nonatomic) int xIndex;
 @property (nonatomic) int yIndex;
-
+@property (nonatomic) BOOL full;
 
 @end

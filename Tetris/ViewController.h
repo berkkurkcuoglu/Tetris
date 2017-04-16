@@ -18,7 +18,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *downButton;
 @property (strong, nonatomic) IBOutlet UIButton *goLeftButton;
 @property (strong, nonatomic) IBOutlet UIButton *goRightButton;
+@property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic, strong) NSMutableArray *cells;
-
+@property (nonatomic, strong) NSMutableArray *tetromino;
+-(void)simulate:(CADisplayLink *)sender;
 @end
 

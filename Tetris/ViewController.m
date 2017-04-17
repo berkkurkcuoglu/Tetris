@@ -18,7 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(simulate:)];
-    [_displayLink setPreferredFramesPerSecond:10];
+    [_displayLink setPreferredFramesPerSecond:5];
     [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
 
     
@@ -61,10 +61,13 @@
         [self moveTetromino];
     else
         [self createTetromino];
+    
+    [self checkRows];
+    
 }
 
 -(void) createTetromino{
-    u_int32_t randomNumber = arc4random_uniform(7);
+    u_int32_t randomNumber = 3;//arc4random_uniform(7);
     switch (randomNumber) {
         case 0: //I-Block
             _tetromino = [[NSMutableArray alloc] init];
@@ -76,7 +79,6 @@
                 [cell setBackgroundColor:[UIColor redColor]];
                 [cell setFull:true];
             }
-            _tetroCenter = [_tetromino objectAtIndex:1];
             _type = 0;
             break;
         case 1: //J-Block
@@ -89,7 +91,6 @@
                 [cell setBackgroundColor:[UIColor redColor]];
                 [cell setFull:true];
             }
-            _tetroCenter = [_tetromino objectAtIndex:1];
             _type = 1;
             break;
         case 2: //L-Block
@@ -102,7 +103,6 @@
                 [cell setBackgroundColor:[UIColor redColor]];
                 [cell setFull:true];
             }
-            _tetroCenter = [_tetromino objectAtIndex:1];
             _type = 2;
             break;
         case 3: //O-Block
@@ -115,26 +115,24 @@
                 [cell setBackgroundColor:[UIColor redColor]];
                 [cell setFull:true];
             }
-            _tetroCenter = [_tetromino objectAtIndex:1];
             _type = 3;
             break;
         case 4: //S-Block
             _tetromino = [[NSMutableArray alloc] init];
-            [_tetromino addObject:[self getCell:8 :0]];
             [_tetromino addObject:[self getCell:9 :0]];
+            [_tetromino addObject:[self getCell:8 :0]];
             [_tetromino addObject:[self getCell:8 :1]];
             [_tetromino addObject:[self getCell:7 :1]];
             for(Cell *cell in _tetromino){
                 [cell setBackgroundColor:[UIColor redColor]];
                 [cell setFull:true];
             }
-            _tetroCenter = [_tetromino objectAtIndex:1];
             _type = 4;
             break;
         case 5: //T-Block
             _tetromino = [[NSMutableArray alloc] init];
-            [_tetromino addObject:[self getCell:8 :0]];
             [_tetromino addObject:[self getCell:7 :0]];
+            [_tetromino addObject:[self getCell:8 :0]];
             [_tetromino addObject:[self getCell:9 :0]];
             [_tetromino addObject:[self getCell:8 :1]];
             for(Cell *cell in _tetromino){
@@ -145,8 +143,8 @@
             break;
         case 6: //Z-Block
             _tetromino = [[NSMutableArray alloc] init];
-            [_tetromino addObject:[self getCell:8 :0]];
             [_tetromino addObject:[self getCell:7 :0]];
+            [_tetromino addObject:[self getCell:8 :0]];
             [_tetromino addObject:[self getCell:8 :1]];
             [_tetromino addObject:[self getCell:9 :1]];
             for(Cell *cell in _tetromino){
@@ -155,6 +153,39 @@
             }
             _type = 6;
             break;
+    }
+}
+
+-(void) checkRows{
+    for( int i= 31; i>= 0 ; i--){
+        int counter =0;
+        for(int j=0; j<16 ; j++){
+            if([self getCell:j :i].full)
+                counter++;
+        }
+        if(counter >= 15)
+            [self moveRows:i];
+    }
+}
+
+-(void) moveRows:(int) row{
+    for(int j=0; j<16 ; j++){
+        [self getCell:j :row].full = false;
+        [[self getCell:j :row] setBackgroundColor:[UIColor blueColor]];
+    }
+    for(Cell *cell in _tetromino){
+        [cell setFull:false];
+        [cell setBackgroundColor:[UIColor blueColor]];
+    }
+    for(int i= row; i >= 0 ; i--){
+        for(int j=0; j<16 ; j++){
+            if(![self inTetromino:[self getCell:j :i] ]){
+                [self getCell:j :row].full = false;
+                [[self getCell:j :row] setBackgroundColor:[UIColor blueColor]];
+                [self getNextCell:[self getCell:j :row]].full = true;
+                [[self getNextCell:[self getCell:j :row]] setBackgroundColor:[UIColor redColor]];
+            }
+        }
     }
 }
 -(BOOL) movePossible{
@@ -273,73 +304,47 @@
         [cell setFull:false];
         [cell setBackgroundColor:[UIColor blueColor]];
     }
-
+    _tetroCenter = [_tetromino objectAtIndex:1];
+    int xIndex = _tetroCenter.xIndex;
+    int yIndex = _tetroCenter.yIndex;
     switch (_type) {
         case 0: //I-Block
-            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: ((Cell*) [_tetromino objectAtIndex:0]).xIndex:((Cell*) [_tetromino objectAtIndex:0]).yIndex]];
-            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: ((Cell*) [_tetromino objectAtIndex:1]).xIndex:((Cell*) [_tetromino objectAtIndex:1]).yIndex]];
-            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: ((Cell*) [_tetromino objectAtIndex:2]).xIndex:((Cell*) [_tetromino objectAtIndex:2]).yIndex]];
-            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: ((Cell*) [_tetromino objectAtIndex:3]).xIndex:((Cell*) [_tetromino objectAtIndex:3]).yIndex]];
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex:yIndex-1]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex:yIndex+2]];
             break;
         case 1: //J-Block
-            [_tetromino replaceObjectAtIndex:0 withObject:[self getNextCell:[_tetromino objectAtIndex:0]]];
-            [_tetromino replaceObjectAtIndex:0 withObject:[self getNextCell:[_tetromino objectAtIndex:0]]];
-            [_tetromino replaceObjectAtIndex:0 withObject:[self getNextCell:[_tetromino objectAtIndex:0]]];
-            [_tetromino replaceObjectAtIndex:0 withObject:[self getNextCell:[_tetromino objectAtIndex:0]]];
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex:yIndex-1]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex-1:yIndex+1]];
             break;
         case 2: //L-Block
-            [_tetromino replaceObjectAtIndex:0 withObject:[self getNextCell:[_tetromino objectAtIndex:0]]];
-            [_tetromino replaceObjectAtIndex:0 withObject:[self getNextCell:[_tetromino objectAtIndex:0]]];
-            [_tetromino replaceObjectAtIndex:0 withObject:[self getNextCell:[_tetromino objectAtIndex:0]]];
-            [_tetromino replaceObjectAtIndex:0 withObject:[self getNextCell:[_tetromino objectAtIndex:0]]];
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex:yIndex-1]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+1:yIndex+1]];
             break;
         case 3: //O-Block
-            _tetromino = [[NSMutableArray alloc] init];
-            [_tetromino addObject:[self getCell:8 :0]];
-            [_tetromino addObject:[self getCell:8 :1]];
-            [_tetromino addObject:[self getCell:7 :0]];
-            [_tetromino addObject:[self getCell:7 :1]];
-            for(Cell *cell in _tetromino){
-                [cell setBackgroundColor:[UIColor redColor]];
-                [cell setFull:true];
-            }
-            _type = 3;
             break;
         case 4: //S-Block
-            _tetromino = [[NSMutableArray alloc] init];
-            [_tetromino addObject:[self getCell:8 :0]];
-            [_tetromino addObject:[self getCell:9 :0]];
-            [_tetromino addObject:[self getCell:8 :1]];
-            [_tetromino addObject:[self getCell:7 :1]];
-            for(Cell *cell in _tetromino){
-                [cell setBackgroundColor:[UIColor redColor]];
-                [cell setFull:true];
-            }
-            _type = 4;
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex-1:yIndex+1]];
             break;
         case 5: //T-Block
-            _tetromino = [[NSMutableArray alloc] init];
-            [_tetromino addObject:[self getCell:8 :0]];
-            [_tetromino addObject:[self getCell:7 :0]];
-            [_tetromino addObject:[self getCell:9 :0]];
-            [_tetromino addObject:[self getCell:8 :1]];
-            for(Cell *cell in _tetromino){
-                [cell setBackgroundColor:[UIColor redColor]];
-                [cell setFull:true];
-            }
-            _type = 5;
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex:yIndex+1]];
             break;
         case 6: //Z-Block
-            _tetromino = [[NSMutableArray alloc] init];
-            [_tetromino addObject:[self getCell:8 :0]];
-            [_tetromino addObject:[self getCell:7 :0]];
-            [_tetromino addObject:[self getCell:8 :1]];
-            [_tetromino addObject:[self getCell:9 :1]];
-            for(Cell *cell in _tetromino){
-                [cell setBackgroundColor:[UIColor redColor]];
-                [cell setFull:true];
-            }
-            _type = 6;
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+1:yIndex+1]];
             break;
     }
     for(Cell *cell in _tetromino){
@@ -348,10 +353,161 @@
     }
 }
 - (IBAction)rightwards:(id)sender {
+    for(Cell *cell in _tetromino){
+        [cell setFull:false];
+        [cell setBackgroundColor:[UIColor blueColor]];
+    }
+    _tetroCenter = [_tetromino objectAtIndex:1];
+    int xIndex = _tetroCenter.xIndex;
+    int yIndex = _tetroCenter.yIndex;
+    switch (_type) {
+        case 0: //I-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+2:yIndex]];
+            break;
+        case 1: //J-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex:yIndex-1]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+2:yIndex]];
+            break;
+        case 2: //L-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+2:yIndex]];
+            break;
+        case 3: //O-Block
+            break;
+        case 4: //S-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex:yIndex-1]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+1:yIndex+1]];
+            break;
+        case 5: //T-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex:yIndex-1]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+1:yIndex]];
+            break;
+        case 6: //Z-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex:yIndex-1]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex-1:yIndex+1]];
+            break;
+    }
+    for(Cell *cell in _tetromino){
+        [cell setFull:true];
+        [cell setBackgroundColor:[UIColor redColor]];
+    }
+
 }
 - (IBAction)leftwards:(id)sender {
+    for(Cell *cell in _tetromino){
+        [cell setFull:false];
+        [cell setBackgroundColor:[UIColor blueColor]];
+    }
+    _tetroCenter = [_tetromino objectAtIndex:1];
+    int xIndex = _tetroCenter.xIndex;
+    int yIndex = _tetroCenter.yIndex;
+    switch (_type) {
+        case 0: //I-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+2:yIndex]];
+            break;
+        case 1: //J-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+1:yIndex+1]];
+            break;
+        case 2: //L-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+1:yIndex-1]];
+            break;
+        case 3: //O-Block
+            break;
+        case 4: //S-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex:yIndex-1]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+1:yIndex+1]];
+            break;
+        case 5: //T-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex-1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex:yIndex+1]];
+            break;
+        case 6: //Z-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex:yIndex-1]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex-1:yIndex+1]];
+            break;
+    }
+    for(Cell *cell in _tetromino){
+        [cell setFull:true];
+        [cell setBackgroundColor:[UIColor redColor]];
+    }
 }
 - (IBAction)downwards:(id)sender {
+    for(Cell *cell in _tetromino){
+        [cell setFull:false];
+        [cell setBackgroundColor:[UIColor blueColor]];
+    }
+    _tetroCenter = [_tetromino objectAtIndex:1];
+    int xIndex = _tetroCenter.xIndex;
+    int yIndex = _tetroCenter.yIndex;
+    switch (_type) {
+        case 0: //I-Block
+            break;
+        case 1: //J-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex:yIndex+2]];
+            break;
+        case 2: //L-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex:yIndex+2]];
+            break;
+        case 3: //O-Block
+            break;
+        case 4: //S-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex+1:yIndex+1]];
+            break;
+        case 5: //T-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex-1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex:yIndex-1]];
+            break;
+        case 6: //Z-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex+1:yIndex]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex-1:yIndex+1]];
+            break;
+    }
+    for(Cell *cell in _tetromino){
+        [cell setFull:true];
+        [cell setBackgroundColor:[UIColor redColor]];
+    }
+
 }
 - (IBAction)goLeft:(id)sender {
     if([self leftPossible]){

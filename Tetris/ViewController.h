@@ -21,6 +21,8 @@
 @property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic, strong) NSMutableArray *cells;
 @property (nonatomic, strong) NSMutableArray *tetromino;
+@property (nonatomic) int type;
+@property (nonatomic) Cell *tetroCenter;
 -(void)simulate:(CADisplayLink *)sender;
 @end
 

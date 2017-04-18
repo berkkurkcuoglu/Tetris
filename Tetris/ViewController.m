@@ -92,6 +92,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)exit:(id)sender {
+    [_displayLink invalidate];
+    [self performSegueWithIdentifier:@"exitSegue" sender:nil];
+}
 
 -(void)updateScore{
     if(_currentScore > _highScore){
@@ -114,8 +118,7 @@
                          style:UIAlertActionStyleDefault
                          handler:^(UIAlertAction * action)
                          {
-                             [_displayLink invalidate];
-                             [self viewDidLoad];
+                             [self exit:nil];
                              [alert dismissViewControllerAnimated:YES completion:nil];
                          }];
     
@@ -126,13 +129,25 @@
 
 -(void)simulate:(CADisplayLink *)sender{
     //[self createTetromino];
-    if([self movePossible])
-        [self moveTetromino];
-    else
-        [self createTetromino];
+    if(![self checkEnd]){
+        if([self movePossible])
+            [self moveTetromino];
+        else
+            [self createTetromino];
     
-    [self checkRows];
-    
+        [self checkRows];
+    }
+    else{
+        [self gameOver];
+    }
+}
+-(BOOL) checkEnd{
+    BOOL end = false;
+    for(int i =0;i<16;i++){
+        if(![self inTetromino:[self getCell:i:0]] && [self getCell:i:0].full)
+            end = true;
+    }
+    return end;
 }
 
 -(void) createTetromino{

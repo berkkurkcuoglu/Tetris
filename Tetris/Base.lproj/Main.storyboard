@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ytr-nT-j96">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -12,6 +12,63 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="V2u-eG-gQS">
+            <objects>
+                <viewController id="ytr-nT-j96" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="coh-sL-yo9"/>
+                        <viewControllerLayoutGuide type="bottom" id="It0-nk-xG5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="It4-5n-g1B">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lCX-lV-hGr">
+                                <rect key="frame" x="101" y="276" width="173" height="114"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="New Game">
+                                    <color key="titleColor" red="0.94045501947402954" green="0.76909226179122925" blue="0.134367436170578" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" id="IEC-79-rHC"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="foR-as-Wdl">
+                                <rect key="frame" x="101" y="120" width="173" height="103"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="103" id="ODK-uB-Sh3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A game by Berk &amp; Kaan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fO4-fv-H5q">
+                                <rect key="frame" x="73" y="599" width="229" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.48149389028549194" green="0.49427580833435059" blue="0.085578270256519318" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="foR-as-Wdl" secondAttribute="trailing" constant="85" id="0eC-Vq-0zS"/>
+                            <constraint firstItem="lCX-lV-hGr" firstAttribute="centerY" secondItem="It4-5n-g1B" secondAttribute="centerY" id="4n8-Ok-NUg"/>
+                            <constraint firstItem="lCX-lV-hGr" firstAttribute="centerX" secondItem="It4-5n-g1B" secondAttribute="centerX" id="D1G-0R-Oxq"/>
+                            <constraint firstItem="lCX-lV-hGr" firstAttribute="top" secondItem="foR-as-Wdl" secondAttribute="bottom" constant="53" id="Fka-ac-Bu6"/>
+                            <constraint firstItem="fO4-fv-H5q" firstAttribute="centerX" secondItem="It4-5n-g1B" secondAttribute="centerX" id="Hmd-Fp-F7S"/>
+                            <constraint firstItem="foR-as-Wdl" firstAttribute="centerX" secondItem="It4-5n-g1B" secondAttribute="centerX" id="b0e-bS-4of"/>
+                            <constraint firstItem="foR-as-Wdl" firstAttribute="top" secondItem="coh-sL-yo9" secondAttribute="bottom" constant="100" id="b0q-6e-ogq"/>
+                            <constraint firstItem="foR-as-Wdl" firstAttribute="trailing" secondItem="lCX-lV-hGr" secondAttribute="trailing" id="bFd-Nq-kMx"/>
+                            <constraint firstItem="It0-nk-xG5" firstAttribute="top" secondItem="fO4-fv-H5q" secondAttribute="bottom" constant="47" id="eEL-Qe-imE"/>
+                            <constraint firstItem="fO4-fv-H5q" firstAttribute="leading" secondItem="It4-5n-g1B" secondAttribute="leadingMargin" constant="57" id="vzF-mw-q9c"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3dj-xn-dTG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-679.20000000000005" y="35.532233883058474"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -90,6 +147,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ocd-tX-F5a">
+                                <rect key="frame" x="285" y="8" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="exit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9i6-3B-ABW"/>
+                                    <segue destination="ytr-nT-j96" kind="presentation" identifier="exitSegue" id="yTo-6Q-SjI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.45819705724716187" green="0.46348613500595093" blue="0.082044415175914764" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>

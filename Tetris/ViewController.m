@@ -24,7 +24,7 @@
 
     
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(simulate:)];
-    [_displayLink setPreferredFramesPerSecond:5];
+    [_displayLink setPreferredFramesPerSecond:4];
     [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
 
     UIImage *pauseImage = [UIImage imageNamed:@"pause.png"];
@@ -248,7 +248,7 @@
     }
     for(int i= row; i >= 0 ; i--){
         for(int j=0; j<16 ; j++){
-            if(![self inTetromino:[self getCell:j :i] ]){
+            if(![self inTetromino:[self getCell:j :i] ] && row != 31){
                 [self getCell:j :row].full = false;
                 UIColor *previousColor = [[self getCell:j :row] backgroundColor];
                 [[self getCell:j :row] setBackgroundColor:[UIColor grayColor]];

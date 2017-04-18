@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C04A60281EA584770053E0CB /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = C04A60211EA584770053E0CB /* pause.png */; };
+		C04A60311EA5866B0053E0CB /* down-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C04A602B1EA5866B0053E0CB /* down-icon.png */; };
+		C04A60321EA5866B0053E0CB /* goLeft-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C04A602C1EA5866B0053E0CB /* goLeft-icon.png */; };
+		C04A60331EA5866B0053E0CB /* goRight-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C04A602D1EA5866B0053E0CB /* goRight-icon.png */; };
+		C04A60341EA5866B0053E0CB /* left-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C04A602E1EA5866B0053E0CB /* left-icon.png */; };
+		C04A60351EA5866B0053E0CB /* right-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C04A602F1EA5866B0053E0CB /* right-icon.png */; };
+		C04A60361EA5866B0053E0CB /* up-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C04A60301EA5866B0053E0CB /* up-icon.png */; };
 		C08ECFD41EA2C74A0094E7CE /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = C08ECFD31EA2C74A0094E7CE /* Cell.m */; };
 		C09348121E97347000D29F0A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C09348111E97347000D29F0A /* main.m */; };
 		C09348151E97347000D29F0A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C09348141E97347000D29F0A /* AppDelegate.m */; };
@@ -36,6 +43,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C04A60211EA584770053E0CB /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		C04A602B1EA5866B0053E0CB /* down-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "down-icon.png"; path = "../down-icon.png"; sourceTree = "<group>"; };
+		C04A602C1EA5866B0053E0CB /* goLeft-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "goLeft-icon.png"; path = "../goLeft-icon.png"; sourceTree = "<group>"; };
+		C04A602D1EA5866B0053E0CB /* goRight-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "goRight-icon.png"; path = "../goRight-icon.png"; sourceTree = "<group>"; };
+		C04A602E1EA5866B0053E0CB /* left-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "left-icon.png"; path = "../left-icon.png"; sourceTree = "<group>"; };
+		C04A602F1EA5866B0053E0CB /* right-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "right-icon.png"; path = "../right-icon.png"; sourceTree = "<group>"; };
+		C04A60301EA5866B0053E0CB /* up-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "up-icon.png"; path = "../up-icon.png"; sourceTree = "<group>"; };
 		C08ECFD21EA2C74A0094E7CE /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
 		C08ECFD31EA2C74A0094E7CE /* Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell.m; sourceTree = "<group>"; };
 		C093480D1E97347000D29F0A /* Tetris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tetris.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +125,13 @@
 				C08ECFD21EA2C74A0094E7CE /* Cell.h */,
 				C08ECFD31EA2C74A0094E7CE /* Cell.m */,
 				C09348191E97347000D29F0A /* Main.storyboard */,
+				C04A60211EA584770053E0CB /* pause.png */,
+				C04A602B1EA5866B0053E0CB /* down-icon.png */,
+				C04A602C1EA5866B0053E0CB /* goLeft-icon.png */,
+				C04A602D1EA5866B0053E0CB /* goRight-icon.png */,
+				C04A602E1EA5866B0053E0CB /* left-icon.png */,
+				C04A602F1EA5866B0053E0CB /* right-icon.png */,
+				C04A60301EA5866B0053E0CB /* up-icon.png */,
 				C093481C1E97347000D29F0A /* Assets.xcassets */,
 				C093481E1E97347000D29F0A /* LaunchScreen.storyboard */,
 				C09348211E97347000D29F0A /* Info.plist */,
@@ -255,7 +276,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C09348201E97347000D29F0A /* LaunchScreen.storyboard in Resources */,
+				C04A60361EA5866B0053E0CB /* up-icon.png in Resources */,
+				C04A60351EA5866B0053E0CB /* right-icon.png in Resources */,
+				C04A60341EA5866B0053E0CB /* left-icon.png in Resources */,
+				C04A60311EA5866B0053E0CB /* down-icon.png in Resources */,
+				C04A60281EA584770053E0CB /* pause.png in Resources */,
+				C04A60321EA5866B0053E0CB /* goLeft-icon.png in Resources */,
 				C093481D1E97347000D29F0A /* Assets.xcassets in Resources */,
+				C04A60331EA5866B0053E0CB /* goRight-icon.png in Resources */,
 				C093481B1E97347000D29F0A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

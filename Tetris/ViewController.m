@@ -17,10 +17,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    _scoreLabel.adjustsFontSizeToFitWidth = YES;
+    _scoreLabel.minimumScaleFactor = 0.4;
+    _currentScore = 0;
+    [self updateScore];
+
+    
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(simulate:)];
     [_displayLink setPreferredFramesPerSecond:5];
     [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
 
+    UIImage *pauseImage = [UIImage imageNamed:@"pause.png"];
+    [_pauseButton setImage:pauseImage forState:UIControlStateNormal];
+    UIImage *upImage = [UIImage imageNamed:@"up-icon.png"];
+    [_upButton setImage:upImage forState:UIControlStateNormal];
+    UIImage *rightImage = [UIImage imageNamed:@"right-icon.png"];
+    [_rightButton setImage:rightImage forState:UIControlStateNormal];
+    UIImage *downImage = [UIImage imageNamed:@"down-icon.png"];
+    [_downButton setImage:downImage forState:UIControlStateNormal];
+    UIImage *leftImage = [UIImage imageNamed:@"left-icon.png"];
+    [_leftButton setImage:leftImage forState:UIControlStateNormal];
+    UIImage *goRightImage = [UIImage imageNamed:@"goRight-icon.png"];
+    [_goRightButton setImage:goRightImage forState:UIControlStateNormal];
+    UIImage *goLeftImage = [UIImage imageNamed:@"goLeft-icon.png"];
+    [_goLeftButton setImage:goLeftImage forState:UIControlStateNormal];
     
     NSInteger width = [_gameView frame].size.width/16;
     NSInteger height = [_gameView frame].size.height/32;
@@ -48,11 +68,60 @@
     [self createTetromino];
     
 }
+- (IBAction)pause:(id)sender {
+    self.displayLink.paused = YES;
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"Paused"
+                                  message:[NSString stringWithFormat:@""]
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* resume = [UIAlertAction
+                             actionWithTitle:@"Resume"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 self.displayLink.paused = NO;
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                             }];
+    [alert addAction:resume];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)updateScore{
+    if(_currentScore > _highScore){
+        _highScore = _currentScore;
+        [[NSUserDefaults standardUserDefaults] setInteger:_highScore forKey:@"tetrisHighScore"];
+    }
+    [_scoreLabel setText:[NSString stringWithFormat:@"Score: %ld",_currentScore]];
+}
+
+-(void)gameOver
+{
+    //NSLog(@"Game over");
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"Game Over!!!"
+                                  message:[NSString stringWithFormat:@"High Score: %lu \n\nYour Score: %lu",_highScore,_currentScore]
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"OK"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [_displayLink invalidate];
+                             [self viewDidLoad];
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                         }];
+    
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
+    
 }
 
 -(void)simulate:(CADisplayLink *)sender{
@@ -187,6 +256,8 @@
             }
         }
     }
+    _currentScore += 100;
+    [self updateScore];
 }
 -(BOOL) movePossible{
     BOOL result = true;

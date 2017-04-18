@@ -18,11 +18,15 @@
 @property (strong, nonatomic) IBOutlet UIButton *downButton;
 @property (strong, nonatomic) IBOutlet UIButton *goLeftButton;
 @property (strong, nonatomic) IBOutlet UIButton *goRightButton;
+@property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (strong, nonatomic) IBOutlet UIButton *pauseButton;
 @property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic, strong) NSMutableArray *cells;
 @property (nonatomic, strong) NSMutableArray *tetromino;
 @property (nonatomic) int type;
 @property (nonatomic) Cell *tetroCenter;
+@property (nonatomic) NSInteger highScore;
+@property (nonatomic) NSInteger currentScore;
 -(void)simulate:(CADisplayLink *)sender;
 @end
 

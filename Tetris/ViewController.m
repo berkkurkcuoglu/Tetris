@@ -60,7 +60,7 @@
             cell.xIndex = j;
             cell.yIndex = i;
             cell.full = false;
-            [cell setBackgroundColor:[UIColor blueColor]];
+            [cell setBackgroundColor:[UIColor grayColor]];
             [_cells addObject:cell];
             [_gameView addSubview:cell];
         }
@@ -136,7 +136,7 @@
 }
 
 -(void) createTetromino{
-    u_int32_t randomNumber = 3;//arc4random_uniform(7);
+    u_int32_t randomNumber = arc4random_uniform(7);
     switch (randomNumber) {
         case 0: //I-Block
             _tetromino = [[NSMutableArray alloc] init];
@@ -145,7 +145,7 @@
             [_tetromino addObject:[self getCell:8 :2]];
             [_tetromino addObject:[self getCell:8 :3]];
             for(Cell *cell in _tetromino){
-                [cell setBackgroundColor:[UIColor redColor]];
+                [cell setBackgroundColor:[UIColor  cyanColor]];
                 [cell setFull:true];
             }
             _type = 0;
@@ -157,7 +157,7 @@
             [_tetromino addObject:[self getCell:8 :2]];
             [_tetromino addObject:[self getCell:7 :2]];
             for(Cell *cell in _tetromino){
-                [cell setBackgroundColor:[UIColor redColor]];
+                [cell setBackgroundColor:[UIColor blueColor]];
                 [cell setFull:true];
             }
             _type = 1;
@@ -169,7 +169,7 @@
             [_tetromino addObject:[self getCell:8 :2]];
             [_tetromino addObject:[self getCell:9 :2]];
             for(Cell *cell in _tetromino){
-                [cell setBackgroundColor:[UIColor redColor]];
+                [cell setBackgroundColor:[UIColor orangeColor]];
                 [cell setFull:true];
             }
             _type = 2;
@@ -181,7 +181,7 @@
             [_tetromino addObject:[self getCell:7 :0]];
             [_tetromino addObject:[self getCell:7 :1]];
             for(Cell *cell in _tetromino){
-                [cell setBackgroundColor:[UIColor redColor]];
+                [cell setBackgroundColor:[UIColor yellowColor]];
                 [cell setFull:true];
             }
             _type = 3;
@@ -193,7 +193,7 @@
             [_tetromino addObject:[self getCell:8 :1]];
             [_tetromino addObject:[self getCell:7 :1]];
             for(Cell *cell in _tetromino){
-                [cell setBackgroundColor:[UIColor redColor]];
+                [cell setBackgroundColor:[UIColor greenColor]];
                 [cell setFull:true];
             }
             _type = 4;
@@ -205,7 +205,7 @@
             [_tetromino addObject:[self getCell:9 :0]];
             [_tetromino addObject:[self getCell:8 :1]];
             for(Cell *cell in _tetromino){
-                [cell setBackgroundColor:[UIColor redColor]];
+                [cell setBackgroundColor:[UIColor purpleColor]];
                 [cell setFull:true];
             }
             _type = 5;
@@ -240,19 +240,20 @@
 -(void) moveRows:(int) row{
     for(int j=0; j<16 ; j++){
         [self getCell:j :row].full = false;
-        [[self getCell:j :row] setBackgroundColor:[UIColor blueColor]];
+        [[self getCell:j :row] setBackgroundColor:[UIColor grayColor]];
     }
     for(Cell *cell in _tetromino){
         [cell setFull:false];
-        [cell setBackgroundColor:[UIColor blueColor]];
+        [cell setBackgroundColor:[UIColor grayColor]];
     }
     for(int i= row; i >= 0 ; i--){
         for(int j=0; j<16 ; j++){
             if(![self inTetromino:[self getCell:j :i] ]){
                 [self getCell:j :row].full = false;
-                [[self getCell:j :row] setBackgroundColor:[UIColor blueColor]];
+                UIColor *previousColor = [[self getCell:j :row] backgroundColor];
+                [[self getCell:j :row] setBackgroundColor:[UIColor grayColor]];
                 [self getNextCell:[self getCell:j :row]].full = true;
-                [[self getNextCell:[self getCell:j :row]] setBackgroundColor:[UIColor redColor]];
+                [[self getNextCell:[self getCell:j :row]] setBackgroundColor:previousColor];
             }
         }
     }
@@ -301,16 +302,17 @@
 }
 
 -(void) moveTetromino{
+    UIColor *previousColor = [((Cell*)[_tetromino objectAtIndex:0]) backgroundColor];
     for(Cell *cell in _tetromino){
         [cell setFull:false];
-        [cell setBackgroundColor:[UIColor blueColor]];
+        [cell setBackgroundColor:[UIColor grayColor]];
     }
     for(int i = 0; i < [_tetromino count];i++){
         [_tetromino replaceObjectAtIndex:i withObject:[self getNextCell:[_tetromino objectAtIndex:i]]];
     }
     for(Cell *cell in _tetromino){
         [cell setFull:true];
-        [cell setBackgroundColor:[UIColor redColor]];
+        [cell setBackgroundColor:previousColor];
     }
 }
 
@@ -371,9 +373,10 @@
     return nil;
 }
 - (IBAction)upwards:(id)sender {
+    UIColor *previousColor = [((Cell*)[_tetromino objectAtIndex:0]) backgroundColor];
     for(Cell *cell in _tetromino){
         [cell setFull:false];
-        [cell setBackgroundColor:[UIColor blueColor]];
+        [cell setBackgroundColor:[UIColor grayColor]];
     }
     _tetroCenter = [_tetromino objectAtIndex:1];
     int xIndex = _tetroCenter.xIndex;
@@ -420,13 +423,14 @@
     }
     for(Cell *cell in _tetromino){
         [cell setFull:true];
-        [cell setBackgroundColor:[UIColor redColor]];
+        [cell setBackgroundColor: previousColor];
     }
 }
 - (IBAction)rightwards:(id)sender {
+    UIColor *previousColor = [((Cell*)[_tetromino objectAtIndex:0]) backgroundColor];
     for(Cell *cell in _tetromino){
         [cell setFull:false];
-        [cell setBackgroundColor:[UIColor blueColor]];
+        [cell setBackgroundColor:[UIColor grayColor]];
     }
     _tetroCenter = [_tetromino objectAtIndex:1];
     int xIndex = _tetroCenter.xIndex;
@@ -473,14 +477,15 @@
     }
     for(Cell *cell in _tetromino){
         [cell setFull:true];
-        [cell setBackgroundColor:[UIColor redColor]];
+        [cell setBackgroundColor:previousColor];
     }
 
 }
 - (IBAction)leftwards:(id)sender {
+    UIColor *previousColor = [((Cell*)[_tetromino objectAtIndex:0]) backgroundColor];
     for(Cell *cell in _tetromino){
         [cell setFull:false];
-        [cell setBackgroundColor:[UIColor blueColor]];
+        [cell setBackgroundColor:[UIColor grayColor]];
     }
     _tetroCenter = [_tetromino objectAtIndex:1];
     int xIndex = _tetroCenter.xIndex;
@@ -527,19 +532,24 @@
     }
     for(Cell *cell in _tetromino){
         [cell setFull:true];
-        [cell setBackgroundColor:[UIColor redColor]];
+        [cell setBackgroundColor:previousColor];
     }
 }
 - (IBAction)downwards:(id)sender {
+    UIColor *previousColor = [((Cell*)[_tetromino objectAtIndex:0]) backgroundColor];
     for(Cell *cell in _tetromino){
         [cell setFull:false];
-        [cell setBackgroundColor:[UIColor blueColor]];
+        [cell setBackgroundColor:[UIColor grayColor]];
     }
     _tetroCenter = [_tetromino objectAtIndex:1];
     int xIndex = _tetroCenter.xIndex;
     int yIndex = _tetroCenter.yIndex;
     switch (_type) {
         case 0: //I-Block
+            [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex:yIndex-1]];
+            [_tetromino replaceObjectAtIndex:1 withObject:[self getCell: xIndex:yIndex]];
+            [_tetromino replaceObjectAtIndex:2 withObject:[self getCell: xIndex:yIndex+1]];
+            [_tetromino replaceObjectAtIndex:3 withObject:[self getCell: xIndex:yIndex+2]];
             break;
         case 1: //J-Block
             [_tetromino replaceObjectAtIndex:0 withObject:[self getCell: xIndex-1:yIndex]];
@@ -576,37 +586,39 @@
     }
     for(Cell *cell in _tetromino){
         [cell setFull:true];
-        [cell setBackgroundColor:[UIColor redColor]];
+        [cell setBackgroundColor:previousColor];
     }
 
 }
 - (IBAction)goLeft:(id)sender {
+    UIColor *previousColor = [((Cell*)[_tetromino objectAtIndex:0]) backgroundColor];
     if([self leftPossible]){
         for(Cell *cell in _tetromino){
             [cell setFull:false];
-            [cell setBackgroundColor:[UIColor blueColor]];
+            [cell setBackgroundColor:[UIColor grayColor]];
         }
         for(int i = 0; i < [_tetromino count];i++){
             [_tetromino replaceObjectAtIndex:i withObject:[self getLeftCell:[_tetromino objectAtIndex:i]]];
         }
         for(Cell *cell in _tetromino){
             [cell setFull:true];
-            [cell setBackgroundColor:[UIColor redColor]];
+            [cell setBackgroundColor:previousColor];
         }
     }
 }
 - (IBAction)goRight:(id)sender {
+    UIColor *previousColor = [((Cell*)[_tetromino objectAtIndex:0]) backgroundColor];
     if([self rightPossible]){
         for(Cell *cell in _tetromino){
             [cell setFull:false];
-            [cell setBackgroundColor:[UIColor blueColor]];
+            [cell setBackgroundColor:[UIColor grayColor]];
         }
         for(int i = 0; i < [_tetromino count];i++){
             [_tetromino replaceObjectAtIndex:i withObject:[self getRightCell:[_tetromino objectAtIndex:i]]];
         }
         for(Cell *cell in _tetromino){
             [cell setFull:true];
-            [cell setBackgroundColor:[UIColor redColor]];
+            [cell setBackgroundColor:previousColor];
         }
     }
 }
